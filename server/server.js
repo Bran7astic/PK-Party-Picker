@@ -2,7 +2,7 @@ import express from 'express'
 import path from 'path'
 import favicon from 'serve-favicon'
 import dotenv from 'dotenv'
-import pkmnRouter from './routes/pkmnRoutes'
+import pkmnRouter from './routes/pkmnRoutes.js'
 
 // import the router from your routes file
 
@@ -33,6 +33,12 @@ if (process.env.NODE_ENV === 'production') {
     )
 }
 
+app.use('/pkmn', pkmnRouter)
+
+app.get('/', (req, res) => {
+    res.status(200).send('<h1 style="text-align: center; margin-top:50px">PK-PARTY-PICKER API</h1>')
+})
+
 app.listen(PORT, () => {
-    console.log(`server listening on http://localhost:${PORT}`)
+    console.log(`🚀 server listening on http://localhost:${PORT}`)
 })
