@@ -1,14 +1,36 @@
-import { Box } from "@mui/material";
+import { AddCircle } from "@mui/icons-material";
+import { Box, Card, CardContent, IconButton, Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-export default function AddCard() {
+export default function AddCard({pkmnData}) {
+
+    const navigate = useNavigate()
+
     return(
         <Box 
-            border="1px solid black" 
-            width="30%"
-            height="20em"
-            borderRadius={15}
+            maxWidth="30%"
         >
-            <p>Hello</p>
+            <Card sx={{height: "20em", cursor: "pointer"}}>
+                <CardContent sx={{height: "100%"}}>
+                    {
+                        pkmnData ? (
+                            "Pkmn data here"
+                        ) : (
+                            <Stack 
+                                width="100%"
+                                height="100%"
+                                justifyContent="center" 
+                                alignItems="center"
+                                onClick={() => {navigate('/add')}}
+                            >
+
+                                <AddCircle fontSize="large"/>
+
+                            </Stack>
+                        )
+                    }
+                </CardContent>
+            </Card>
         </Box>
     )
 }

@@ -33,8 +33,6 @@ if (process.env.NODE_ENV === 'production') {
     )
 }
 
-app.use('/pkmn', pkmnRouter)
-
 app.get('/', (req, res) => {
     res.status(200).send('<h1 style="text-align: center; margin-top:50px">PK-PARTY-PICKER API</h1>')
 })

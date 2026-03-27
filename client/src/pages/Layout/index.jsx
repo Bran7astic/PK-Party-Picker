@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 export default function Layout() {
     return(
         <Box>
-            <AppBar position="static">
+            <AppBar position="static" sx={{backgroundColor: "#ff7878"}}>
                 <Toolbar>
                     <Stack direction="row" justifyContent="center" width="100%">
                         <IconButton aria-label="add">
