@@ -29,3 +29,24 @@ export const natures = [
   { name: "Careful", increase: "Sp. Def", decrease: "Sp. Atk" },
   { name: "Quirky", increase: "None", decrease: "None" }
 ];
+
+const statIndexMap = {
+  HP: 0,
+  Attack: 1,
+  Defense: 2,
+  "Sp. Atk": 3,
+  "Sp. Def": 4,
+  Speed: 5,
+};
+
+export const natureIndexMap = Object.fromEntries(
+  natures.map((nature) => [
+    nature.name,
+    [
+      nature.increase !== "None" ? statIndexMap[nature.increase] : null,
+      nature.decrease !== "None" ? statIndexMap[nature.decrease] : null,
+    ],
+  ])
+);
+
+console.log(natureIndexMap)

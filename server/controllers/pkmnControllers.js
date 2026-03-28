@@ -6,15 +6,15 @@ const addPkmn = async(req, res) => {
     
 
     try {
-        const {nickname, nature, ability, moves} = req.body
+        const {nickname, image, nature, ability, stats} = req.body
         
         const insertQuery = `
-        INSERT INTO pkmn (nickname, nature, ability, moves)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO pkmn (nickname, image, nature, ability, stats)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING *
         `
         
-        const results = await pool.query(insertQuery, [nickname, nature, ability, moves])
+        const results = await pool.query(insertQuery, [nickname, image, nature, ability, stats])
         
         res.status(201).json(results.rows[0])
     } catch (err) {
@@ -56,19 +56,20 @@ const getPkmnById = async (req, res) => {
 const updatePkmn = async (req, res) => {
     try {
         const id = req.params.id
-        const {nickname, nature, ability, moves} = req.body
+        const {nickname, image, nature, ability, stats} = req.body
 
         const updateQuery = `
             UPDATE pkmn
             SET 
                 nickname = $1, 
-                nature = $2,
-                ability = $3,
-                moves = $4
-            WHERE id = $5
+                image = $2,
+                nature = $3,
+                ability = $4
+                stats = $5
+            WHERE id = $6
         `
 
-        const results = await pool.query(updateQuery, [nickname, nature, ability, moves, id])
+        const results = await pool.query(updateQuery, [nickname, image, nature, ability, stats, id])
         res.status(200).json(results.rows[0])
 
     } catch (err) {

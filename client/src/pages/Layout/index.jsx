@@ -1,7 +1,10 @@
 import { AppBar, Box, IconButton, Stack, Toolbar, Typography } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Layout() {
+
+    const navigate = useNavigate()
+
     return(
         <Box>
             <AppBar position="static" sx={{backgroundColor: "#ff7878"}}>
@@ -9,7 +12,15 @@ export default function Layout() {
                     <Stack direction="row" justifyContent="center" width="100%">
                         <IconButton aria-label="add">
                         </IconButton>
-                        <Typography fontWeight="bold" variant="h5">Pokemon Party Picker</Typography>
+                        <Typography 
+                            fontWeight="bold"
+                            variant="h5"
+                            color="white"
+                            onClick={() => navigate('/')}
+                            sx={{cursor: "pointer"}}
+                        >
+                            Pokemon Party Picker
+                        </Typography>
                     </Stack>
                 </Toolbar>
             </AppBar>

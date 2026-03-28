@@ -9,9 +9,10 @@ const createPkmnTable = async () => {
         CREATE TABLE IF NOT EXISTS pkmn (
             id SERIAL PRIMARY KEY, 
             nickname VARCHAR(255) NOT NULL,
+            image VARCHAR(255) NOT NULL,
             nature VARCHAR(255) NOT NULL,
             ability VARCHAR(255) NOT NULL,
-            moves VARCHAR(255) [] NOT NULL
+            stats VARCHAR(255) [] NOT NULL
         )
     `
 

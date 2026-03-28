@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import AddCard from "../../components/AddCard";
 import { useEffect, useState } from "react";
 import PkmnAPI from "../../services/PkmnAPI";
@@ -22,7 +22,13 @@ export default function Home() {
             <Typography variant="h3" marginBottom="3%">
                 Pokemon Party Picker
             </Typography>
-            <AddCard/>
+            <Box sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "3%"
+            }}>
+                <AddCard/>
+            </Box>
         </>
     )
 }

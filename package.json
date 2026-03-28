@@ -11,6 +11,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.9",
     "@mui/material": "^7.3.9",
+    "@mui/x-charts": "^8.28.0",
     "@picocss/pico": "^1.5.7",
     "concurrently": "^7.6.0",
     "dotenv": "^16.0.3",

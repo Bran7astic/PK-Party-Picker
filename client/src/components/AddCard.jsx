@@ -8,9 +8,9 @@ export default function AddCard({pkmnData}) {
 
     return(
         <Box 
-            maxWidth="30%"
+            width="31%"
         >
-            <Card sx={{height: "20em", cursor: "pointer"}}>
+            <Card sx={{height: "20em", cursor: "pointer", marginBlock: "2%"}}>
                 <CardContent sx={{height: "100%"}}>
                     {
                         pkmnData ? (
