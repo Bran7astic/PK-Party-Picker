@@ -1,5 +1,6 @@
 import { AppBar, Box, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
+import icon from "../../../public/icons.svg"
 
 export default function Layout() {
 
@@ -7,20 +8,25 @@ export default function Layout() {
 
     return(
         <Box>
-            <AppBar position="static" sx={{backgroundColor: "#ff7878"}}>
+            <AppBar position="sticky" sx={{backgroundColor: "#ff7878"}}>
                 <Toolbar>
                     <Stack direction="row" justifyContent="center" width="100%">
                         <IconButton aria-label="add">
                         </IconButton>
-                        <Typography 
-                            fontWeight="bold"
-                            variant="h5"
-                            color="white"
-                            onClick={() => navigate('/')}
-                            sx={{cursor: "pointer"}}
-                        >
-                            Pokemon Party Picker
-                        </Typography>
+
+                        <Stack alignItems="center" justifyContent="center" direction="row" gap={1}>
+                            <Box component="img" src={icon} width={40}/>
+                            <Typography 
+                                fontWeight="bold"
+                                variant="h5"
+                                color="white"
+                                onClick={() => navigate('/')}
+                                sx={{cursor: "pointer"}}
+                                >
+                                Pokemon Party Picker
+                            </Typography>
+                        </Stack>
+
                     </Stack>
                 </Toolbar>
             </AppBar>

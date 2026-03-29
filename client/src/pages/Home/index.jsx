@@ -21,8 +21,8 @@ export default function Home() {
 
   return (
     <>
-      <Typography variant="h3" marginBottom="3%">
-        Pokemon Party Picker
+      <Typography variant="h6" marginBottom="3%">
+        Draft your Pokemon Party in Pokemon Party Picker! Press the + to add a Pokemon. (NOTE: You may only add up to 6 Pokemon at a time.)
       </Typography>
       {fetching ? (
         <CircularProgress />
@@ -36,7 +36,13 @@ export default function Home() {
           }}
         >
           {pkmnData.map((item) => (
-            <AddCard pkmnData={item} />
+            <AddCard 
+                key={item.id} 
+                pkmnData={item} 
+                onDelete={(id) => {
+                    setPkmnData(prev => prev.filter(p => p.id !== id))
+                }}
+            />
           ))}
           { pkmnData.length < 6 && <AddCard />}
         </Box>

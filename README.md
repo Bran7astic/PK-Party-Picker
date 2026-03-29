@@ -1,10 +1,10 @@
 # WEB103 Project 4 - *Pokemon Party Picker*
 
-Submitted by: **Your name here**
+Submitted by: **Brandon Budhan**
 
-About this web app: **App description here**
+About this web app: **Draft your Pokemon Party in Pokemon Party Picker! Press the + to add a Pokemon. (NOTE: You may only add up to 6 Pokemon at a time.)**
 
-Time spent: **X** hours
+Time spent: **15** hours
 
 ## Required Features
 
@@ -20,12 +20,12 @@ The following **required** functionality is completed:
 - [x] **On selecting each option, the displayed visual icon for the `CustomItem` updates to match the option the user chose.**
 - [ ] **The price of the `CustomItem` (e.g. car) changes dynamically as different options are selected *OR* The app displays the total price of all features.**
 - [x] **The visual interface changes in response to at least one customizable feature.**
-- [ ] **The user can submit their choices to save the item to the list of created `CustomItem`s.**
-- [ ] **If a user submits a feature combo that is impossible, they should receive an appropriate error message and the item should not be saved to the database.**
-- [ ] **Users can view a list of all submitted `CustomItem`s.**
-- [ ] **Users can edit a submitted `CustomItem` from the list view of submitted `CustomItem`s.**
-- [ ] **Users can delete a submitted `CustomItem` from the list view of submitted `CustomItem`s.**
-- [ ] **Users can update or delete `CustomItem`s that have been created from the detail page.**
+- [x] **The user can submit their choices to save the item to the list of created `CustomItem`s.**
+- [x] **If a user submits a feature combo that is impossible, they should receive an appropriate error message and the item should not be saved to the database.**
+- [x] **Users can view a list of all submitted `CustomItem`s.**
+- [x] **Users can edit a submitted `CustomItem` from the list view of submitted `CustomItem`s.**
+- [x] **Users can delete a submitted `CustomItem` from the list view of submitted `CustomItem`s.**
+- [x] **Users can update or delete `CustomItem`s that have been created from the detail page.**
 
 
 The following **optional** features are implemented:
@@ -34,16 +34,17 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you added to improve the site's functionality!
+- [x] Used external APIs to fetch customization options
+- [x] Used charts to dynamically render information about custom items
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented required features:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='./preview.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  GIF tool here
+GIF created with ScreenToGif
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
@@ -55,7 +56,7 @@ Describe any challenges encountered while building the app or any additional con
 
 ## License
 
-Copyright [yyyy] [name of copyright owner]
+Copyright [2026] [Brandon Budhan]
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

@@ -42,8 +42,43 @@ const createPokemon = async (pkmnDetails) => {
     }
 }
 
+const updatePokemon = async (pkmnDetails, id) => {
+    
+    try {
+        const response = await fetch(`/pkmn/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(pkmnDetails)
+        })
+        const data = await response.json()
+        console.log(data)
+    } catch (err) {
+        return {error: err.message}
+    }
+
+}
+
+const deletePokemon = async (id) => {
+    try {
+        const response = await fetch(`/pkmn/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        })
+        const data = await response.json()
+        console.log(data)
+    } catch (err) {
+        return {error: err.message}
+    }
+}
+
 export default {
     getAllPokemon,
     getPokemonById,
-    createPokemon
+    createPokemon,
+    updatePokemon,
+    deletePokemon
 }

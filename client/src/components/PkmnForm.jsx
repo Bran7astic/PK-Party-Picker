@@ -19,10 +19,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function PkmnForm({edit=false, pokemon=null}) {
   const [allPokemon, setAllPokemon] = useState([]);
-  const [pkmnFromDb, setPkmnFromDb] = useState(null)
-  const [currPokemon, setCurrPokemon] = useState(null);
-  const [pkmnJson, setPkmnJson] = useState(null);
-  const [pkmnDetails, setPkmnDetails] = useState( pokemon || {
+  const [pkmnFromDb, setPkmnFromDb] = useState(null) // Pokemon passed in as prop from database
+  const [currPokemon, setCurrPokemon] = useState(null); // PokeAPI object with pokemon name and url to get more details
+  const [pkmnJson, setPkmnJson] = useState(null); // Detailed json about pokemon from PokeAPI
+  const [pkmnDetails, setPkmnDetails] = useState( pokemon || { // Specific pokemon that is to be uploaded to the database
     dexNo: null,
     nickname: "",
     image: "",
@@ -31,6 +31,7 @@ export default function PkmnForm({edit=false, pokemon=null}) {
     stats: [],
     shiny: false,
   });
+  const [errors, setErrors] = useState({})
 
   const navigate = useNavigate()
 
@@ -161,15 +162,48 @@ export default function PkmnForm({edit=false, pokemon=null}) {
   // Reset blank nickname to default
 
 
-  const handleSubmit = () => {
+  const handleSubmit = (type) => {
     const finalDetails = {
         ...pkmnDetails,
         nickname: pkmnDetails.nickname || capitalize(pkmnJson?.name)
     }
 
     setPkmnDetails(finalDetails)
-    APIController.createPokemon(finalDetails)
-    navigate('/')
+
+    const sendToDb = async () => {
+
+        switch (type) {
+            case "create":
+                await APIController.createPokemon(finalDetails)
+                break
+            case "update":
+                await APIController.updatePokemon(finalDetails, pokemon?.id)
+                break
+            case "delete":
+                await APIController.deletePokemon(pokemon?.id)
+                break
+            default:
+                console.error("Not valid submission type")
+        }
+    }
+
+    let newErrors= {}
+
+    if (!pkmnDetails.nature) {
+        newErrors.nature = "A Nature must be selected!"
+    }
+
+    if (!pkmnDetails.ability) {
+        newErrors.abilities = "An ability must be selected!"
+    }
+
+    setErrors(newErrors)
+
+    if (Object.keys(newErrors).length == 0) {        
+        sendToDb()
+        navigate('/')
+    }
+
   }
 
 
@@ -300,15 +334,17 @@ export default function PkmnForm({edit=false, pokemon=null}) {
               <TextField
                 label="Nature"
                 select
-                helperText="Natures will impact your Pokemon's stats!"
+                error={!!errors.nature}
+                helperText={!!errors.nature? errors.nature : "Natures will impact your Pokemon's stats!"}
                 value={pkmnDetails.nature}
                 onChange={handleNature}
-              >
+                sx={{width: "45%"}}
+                >
                 {natures.map((nature) => (
-                  <MenuItem key={nature.name} value={nature.name}>
+                    <MenuItem key={nature.name} value={nature.name}>
                     {nature.name}
                     {`${
-                      nature.increase !== "None" ? ` (+${nature.increase}` : ""
+                        nature.increase !== "None" ? ` (+${nature.increase}` : ""
                     } ${nature.decrease !== "None" ? ` -${nature.decrease})` : ""}`}
                   </MenuItem>
                 ))}
@@ -318,8 +354,10 @@ export default function PkmnForm({edit=false, pokemon=null}) {
               <TextField
                 label="Ability"
                 select
-                helperText="Abilities provide extra functionality in battle!"
+                error={!!errors.abilities}
+                helperText={!!errors.abilities ? errors.abilities : "Abilities provide extra functionality in battle!"}
                 value={pkmnDetails.ability}
+                sx={{width: "45%"}}
                 onChange={(event) => {
                   setPkmnDetails((prev) => ({
                     ...prev,
@@ -334,7 +372,15 @@ export default function PkmnForm({edit=false, pokemon=null}) {
                 ))}
               </TextField>
             </Stack>
-            <Button variant="outlined" onClick={handleSubmit}>+ ADD</Button>
+
+            {edit ? (
+                <Stack gap={2} direction="row">
+                    <Button variant="contained" onClick={() => handleSubmit("delete")}><Typography color="white">DELETE</Typography></Button>
+                    <Button variant="outlined" onClick={() => handleSubmit("update")}>UPDATE</Button>
+                </Stack>
+            ) : (
+                <Button variant="outlined" onClick={() => handleSubmit("create")}>+ ADD</Button>
+            )}
           </Stack>
         )}
       </Stack>
