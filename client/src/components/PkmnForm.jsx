@@ -19,9 +19,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function PkmnForm({edit=false, pokemon=null}) {
   const [allPokemon, setAllPokemon] = useState([]);
+  const [pkmnFromDb, setPkmnFromDb] = useState(null)
   const [currPokemon, setCurrPokemon] = useState(null);
   const [pkmnJson, setPkmnJson] = useState(null);
-  const [pkmnDetails, setPkmnDetails] = useState({
+  const [pkmnDetails, setPkmnDetails] = useState( pokemon || {
     dexNo: null,
     nickname: "",
     image: "",
@@ -51,6 +52,23 @@ export default function PkmnForm({edit=false, pokemon=null}) {
     fetchAllPokemon();
   }, []);
 
+  useEffect(() => {
+    setPkmnFromDb(pokemon)
+  }, [pokemon])
+
+  useEffect(() => {
+
+    const fetchPkmnJson = async() => {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pkmnFromDb.dexno}`)
+        const data = await response.json()
+        setPkmnJson(data)
+    }
+
+    if (pkmnFromDb) {
+        setPkmnDetails(pkmnFromDb) 
+        fetchPkmnJson()
+    }
+  }, [pkmnFromDb])
 
   // Fetch additional info about current pokemon
   useEffect(() => {
@@ -67,6 +85,7 @@ export default function PkmnForm({edit=false, pokemon=null}) {
       }
     };
 
+    setPkmnFromDb(null)
     getPkmnInfo();
   }, [currPokemon]);
 
@@ -75,11 +94,11 @@ export default function PkmnForm({edit=false, pokemon=null}) {
     if (pkmnJson) {
       setPkmnDetails((prev) => ({
         dexNo: pkmnJson.id,
-        nickname: capitalize(pkmnJson.name),
-        image: pkmnJson.sprites.other["official-artwork"].front_default,     
-        shiny: false,     
-        nature: "",
-        ability: "",
+        nickname: pkmnFromDb ? pkmnFromDb.nickname : capitalize(pkmnJson.name),
+        image: pkmnFromDb ? pkmnFromDb.image : pkmnJson.sprites.other["official-artwork"].front_default,     
+        shiny: pkmnFromDb ? pkmnFromDb.shiny : false,     
+        nature: pkmnFromDb ? pkmnFromDb.nature : "",
+        ability: pkmnFromDb ? pkmnFromDb.ability : "",
         stats: pkmnJson.stats.reduce(
           (statsArr, currStat) => [...statsArr, currStat.base_stat],
           [],
@@ -106,7 +125,7 @@ export default function PkmnForm({edit=false, pokemon=null}) {
       "nidoran-f": "Nidoran-F",
       "nidoran-m": "Nidoran-M",
       "porygon-2": "Porygon-2",
-      farfetchd: "Farfetch'd",
+      "farfetchd": "Farfetch'd",
       "ho-oh": "Ho-oh",
       "mime-jr": "Mime Jr.",
       "mr-mime": "Mr. Mime",
