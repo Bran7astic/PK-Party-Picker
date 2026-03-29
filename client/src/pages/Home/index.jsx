@@ -1,34 +1,46 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import AddCard from "../../components/AddCard";
 import { useEffect, useState } from "react";
-import PkmnAPI from "../../services/PkmnAPI";
+import APIController from "../../services/PkmnAPI";
 
 export default function Home() {
+  const [pkmnData, setPkmnData] = useState([]);
+  const [fetching, setFetching] = useState(false);
 
-    const [pkmnData, setPkmnData] = useState({})
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      setFetching(true);
+      const data = await APIController.getAllPokemon();
+      setFetching(false);
 
-    useEffect(() => {
-        const fetchPokemon = async () => {
-            const data = await PkmnAPI.getAllPokemon()
-            console.log(data)
-        }
+      setPkmnData(data);
+    };
 
-        fetchPokemon()
+    fetchPokemon();
+  }, []);
 
-    }, [])
-
-    return(
-        <>
-            <Typography variant="h3" marginBottom="3%">
-                Pokemon Party Picker
-            </Typography>
-            <Box sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "3%"
-            }}>
-                <AddCard/>
-            </Box>
-        </>
-    )
+  return (
+    <>
+      <Typography variant="h3" marginBottom="3%">
+        Pokemon Party Picker
+      </Typography>
+      {fetching ? (
+        <CircularProgress />
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: "3%",
+          }}
+        >
+          {pkmnData.map((item) => (
+            <AddCard pkmnData={item} />
+          ))}
+          { pkmnData.length < 6 && <AddCard />}
+        </Box>
+      )}
+    </>
+  );
 }
